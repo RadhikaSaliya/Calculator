@@ -36,14 +36,14 @@ class ViewHistory : AppCompatActivity() {
         arrayList = myDB?.allEquation
         adptr = Cust_adptr(this, arrayList!!)
         list.adapter = adptr
-
+        var str = "radhika"
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
             android.R.id.home -> {
-              onBackPressed()
+                onBackPressed()
                 return true
             }
 
