@@ -44,12 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         myDB = DataBase(this)
         decimalFormat = DecimalFormat("#.##########")
 
-
-
     }
-
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
 
