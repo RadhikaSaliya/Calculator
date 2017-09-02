@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (str != "0") {
 
                     val length = str.length
-
+var str="radhika"
                     if (str[length - 1].toString() == ".") {
                         txtans?.text=str.subSequence(0, length - 1)
 
