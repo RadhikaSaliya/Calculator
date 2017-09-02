@@ -1,8 +1,5 @@
 package com.user.canopas.calculator
 
-/**
- * Created by canopas on 29/08/17.
- */
 
 class History {
     var _id: Int = 0

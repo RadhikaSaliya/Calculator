@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 import java.util.ArrayList
 
-/**
- * Created by canopas on 29/08/17.
- */
+
 
 class DataBase(context: Context) : SQLiteOpenHelper(context, DATABASE, null, 1) {
 

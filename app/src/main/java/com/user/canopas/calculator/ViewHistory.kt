@@ -36,7 +36,7 @@ class ViewHistory : AppCompatActivity() {
         arrayList = myDB?.allEquation
         adptr = Cust_adptr(this, arrayList!!)
         list.adapter = adptr
-        var str = "radhika"
+
 
     }
 
