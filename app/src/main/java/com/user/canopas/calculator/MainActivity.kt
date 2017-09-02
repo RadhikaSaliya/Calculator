@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    //    Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btndot, btnsum, btnsub, btndiv, btnmul, btnPlMin,btnans;
+
     internal var txtans: TextView?=null
     internal var txtscreen: TextView?=null
     internal var lastDot: Boolean? = true
@@ -30,10 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     internal var onEqual: Boolean? = false
     private val numericButtons = intArrayOf(R.id.btnZero, R.id.btnOne, R.id.btnTwo, R.id.btnThree, R.id.btnFour, R.id.btnFive, R.id.btnSix, R.id.btnSeven, R.id.btnEight, R.id.btnNine, R.id.btnDot, R.id.btnDoubleZero)
     private val operatorButtons = intArrayOf(R.id.btnAdd, R.id.btnSubtract, R.id.btnMultiply, R.id.btnDivide, R.id.btnAC, R.id.btnEqual, R.id.btnPluseMin, R.id.btnBack)
-    private val valueOne = java.lang.Double.NaN
-    private val valueTwo: Double = 0.toDouble()
     internal var Store_ans: String=""
-    internal var action: String? = null
     internal var decimalFormat: DecimalFormat?=null
     internal var myDB: DataBase?=null
 
@@ -53,6 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun test() {
         var str="Hello"
+        var abc="1"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
