@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         myDB = DataBase(this)
         decimalFormat = DecimalFormat("#.##########")
 
+        test()
+
+    }
+
+    private fun test() {
+        var str="Hello"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
