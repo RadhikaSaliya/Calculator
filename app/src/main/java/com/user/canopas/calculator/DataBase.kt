@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.util.ArrayList
 
 
-
 class DataBase(context: Context) : SQLiteOpenHelper(context, DATABASE, null, 1) {
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -37,7 +36,7 @@ class DataBase(context: Context) : SQLiteOpenHelper(context, DATABASE, null, 1) 
             val arr = ArrayList<History>()
 
             val db = readableDatabase
-            val cursor = db.rawQuery("SELECT * FROM " + TABLE, null)
+            val cursor = db.rawQuery("SELECT * FROM " + TABLE + " ORDER BY " + KEY_ID + " DESC ", null)
             if (cursor.moveToFirst()) {
                 while (cursor.moveToNext()) {
                     val history = History()

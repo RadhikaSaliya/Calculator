@@ -97,7 +97,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun Calculate() {
         if (txtans?.text.toString() != "0") {
+
             val Store_equation = getEqation()
+
             val df = SimpleDateFormat("EEE, d MMM yyyy ,h:mm a")
             val date = df.format(Calendar.getInstance().time)
             myDB?.insert(History(Store_equation, date))
@@ -160,6 +162,7 @@ lastNum=false
     private fun getEqation(): String {
 
         if (lastNum!!) {
+
             onEqual = true
             val txt = txtans?.text.toString()
             val expression = ExpressionBuilder(txt).build()
@@ -175,7 +178,7 @@ lastNum=false
                 Store_ans = "ERROR"
             }
 
-        }
+       }
         return Store_ans
 
     }
