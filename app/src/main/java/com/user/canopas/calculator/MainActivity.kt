@@ -5,18 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
 import android.widget.TextView
 
-import net.objecthunter.exp4j.Expression
 import net.objecthunter.exp4j.ExpressionBuilder
 
-import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -88,7 +82,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnSubtract -> getAction("-")
             R.id.btnDivide -> getAction("/")
             R.id.btnMultiply -> getAction("*")
-            R.id.btnAC -> ClearButton();
+            R.id.btnAC -> {
+
+                ClearButton()
+            }
             R.id.btnEqual -> Calculate();
             R.id.btnDoubleZero -> if (txtans?.text.toString() != "0")
                 getNumber("00")
@@ -99,25 +96,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (txtans?.text.toString() != "0") {
 
             val Store_equation = getEqation()
+            StoreInDB(Store_equation)
 
-            val df = SimpleDateFormat("EEE, d MMM yyyy ,h:mm a")
-            val date = df.format(Calendar.getInstance().time)
-            myDB?.insert(History(Store_equation, date))
         }
     }
 
+    private fun StoreInDB(store_equation: String) {
+
+        val df = SimpleDateFormat("EEE, d MMM yyyy ,h:mm a")
+        val date = df.format(Calendar.getInstance().time)
+        myDB?.insert(History(store_equation!!, date))
+        isLastDot = true
+        onEqual = false
+    }
+
     private fun DotButton() {
-lastNum=false
+        lastNum = false
         if (onEqual!!) {
             txtans?.text = "0"
             onEqual = false
         }
         if (isLastDot!!) {
-            if (txtans?.text == "."){
+            if (txtans?.text == ".") {
 
-                txtans?.text = "0." + txtans?.text}
-            else
-               txtans?.text = txtans?.text.toString() + "."
+                txtans?.text = "0." + txtans?.text
+            } else
+                txtans?.text = txtans?.text.toString() + "."
 
 
         }
@@ -178,7 +182,7 @@ lastNum=false
                 Store_ans = "ERROR"
             }
 
-       }
+        }
         return Store_ans
 
     }
