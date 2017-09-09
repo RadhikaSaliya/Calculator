@@ -3,29 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:layout_height="match_parent"
 
     tools:context="com.user.canopas.calculator.MainActivity">
-    <TextView
-        android:id="@+id/txtScreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="right|center_vertical"
 
-        android:layout_marginLeft="20dp"
-        android:paddingLeft="10dp"
-        android:layout_marginRight="20dp"
-
-      />
     <TextView
         android:id="@+id/txtans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="right|center_vertical"
-        android:layout_below="@id/txtScreen"
+
         android:padding="10dp"
         android:layout_margin="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge"

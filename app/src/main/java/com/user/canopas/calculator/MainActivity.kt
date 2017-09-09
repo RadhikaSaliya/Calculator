@@ -23,28 +23,29 @@ import java.util.Calendar
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    internal var txtans: TextView?=null
-    internal var txtscreen: TextView?=null
-    internal var lastDot: Boolean? = true
+    internal var txtans: TextView? = null
+
+    internal var isLastDot: Boolean? = true
     internal var lastNum: Boolean? = false
     internal var onEqual: Boolean? = false
     private val numericButtons = intArrayOf(R.id.btnZero, R.id.btnOne, R.id.btnTwo, R.id.btnThree, R.id.btnFour, R.id.btnFive, R.id.btnSix, R.id.btnSeven, R.id.btnEight, R.id.btnNine, R.id.btnDot, R.id.btnDoubleZero)
     private val operatorButtons = intArrayOf(R.id.btnAdd, R.id.btnSubtract, R.id.btnMultiply, R.id.btnDivide, R.id.btnAC, R.id.btnEqual, R.id.btnPluseMin, R.id.btnBack)
-    internal var Store_ans: String=""
-    internal var decimalFormat: DecimalFormat?=null
-    internal var myDB: DataBase?=null
+    internal var Store_ans: String = ""
+    internal var decimalFormat: DecimalFormat? = null
+    internal var myDB: DataBase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         txtans = findViewById(R.id.txtans) as TextView
         txtans?.text = "0"
-        txtscreen = findViewById(R.id.txtScreen) as TextView
+
         BindView()
         myDB = DataBase(this)
         decimalFormat = DecimalFormat("#.##########")
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
 
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.history -> startActivity(Intent(this@MainActivity,ViewHistory::class.java))
+            R.id.history -> startActivity(Intent(this@MainActivity, ViewHistory::class.java))
         }
         return true
     }
@@ -81,56 +82,71 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnEight -> getNumber("8")
             R.id.btnNine -> getNumber("9")
             R.id.btnZero -> getNumber("0")
-            R.id.btnBack -> {
-                val str = txtans?.text.toString()
-                if (str != "0") {
-
-                    val length = str.length
-
-                    if (str[length - 1].toString() == ".") {
-                        txtans?.text=str.subSequence(0, length - 1)
-
-                        lastDot = true
-                    }
-                    txtans?.setText(str.subSequence(0, length - 1))
-                }
-            }
-            R.id.btnDoubleZero -> if (txtans?.text.toString() != "0")
-                getNumber("00")
-            R.id.btnPluseMin -> if (txtans?.text.toString() != "0" && lastNum!!) {
-
-            }
-            R.id.btnDot -> {
-                if (lastDot!!) {
-                    if (txtans?.text == ".")
-                        txtans?.text = "0." + txtans?.text
-                    else
-                        txtans?.text = txtans?.text.toString() + "."
-
-                }
-                lastDot = false
-            }
+            R.id.btnBack -> BackButton();
+            R.id.btnDot -> DotButton();
             R.id.btnAdd -> getAction("+")
             R.id.btnSubtract -> getAction("-")
             R.id.btnDivide -> getAction("/")
             R.id.btnMultiply -> getAction("*")
-            R.id.btnAC -> {
-                txtans?.text = "0"
-                lastNum = false
-                lastDot = true
-                onEqual = false
+            R.id.btnAC -> ClearButton();
+            R.id.btnEqual -> Calculate();
+            R.id.btnDoubleZero -> if (txtans?.text.toString() != "0")
+                getNumber("00")
+        }
+    }
+
+    private fun Calculate() {
+        if (txtans?.text.toString() != "0") {
+            val Store_equation = getEqation()
+            val df = SimpleDateFormat("EEE, d MMM yyyy ,h:mm a")
+            val date = df.format(Calendar.getInstance().time)
+            myDB?.insert(History(Store_equation, date))
+        }
+    }
+
+    private fun DotButton() {
+lastNum=false
+        if (onEqual!!) {
+            txtans?.text = "0"
+            onEqual = false
+        }
+        if (isLastDot!!) {
+            if (txtans?.text == "."){
+
+                txtans?.text = "0." + txtans?.text}
+            else
+               txtans?.text = txtans?.text.toString() + "."
+
+
+        }
+
+        isLastDot = false
+    }
+
+    private fun ClearButton() {
+        txtans?.text = "0"
+        lastNum = false
+        isLastDot = true
+        onEqual = false
+    }
+
+    private fun BackButton() {
+        val str = txtans?.text.toString()
+        if (str != "0") {
+
+            val length = str.length
+
+            if (str[length - 1].toString() == ".") {
+                txtans?.text = str.subSequence(0, length - 1)
+
+                isLastDot = true
             }
-            R.id.btnEqual -> if (txtans?.text.toString() != "0") {
-                val Store_equation = onEqual()
-                val df = SimpleDateFormat("EEE, d MMM yyyy ,h:mm a")
-                val date = df.format(Calendar.getInstance().time)
-                myDB?.insert(History(Store_equation, date))
-            }
+            txtans?.setText(str.subSequence(0, length - 1))
         }
     }
 
     private fun getAction(action: String) {
-        lastDot = true
+        isLastDot = true
         if (onEqual!!) {
             txtans?.text = "0"
             onEqual = false
@@ -141,22 +157,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         lastNum = false
     }
 
-    private fun onEqual(): String {
+    private fun getEqation(): String {
 
         if (lastNum!!) {
             onEqual = true
             val txt = txtans?.text.toString()
             val expression = ExpressionBuilder(txt).build()
             try {
-                // Calculate the result and display
                 val result = expression.evaluate()
                 txtans?.text = java.lang.Double.toString(result)
-                lastDot = true // Result contains a dot
-
+                isLastDot = true
                 Store_ans = txt + "=" + java.lang.Double.toString(result)
                 Log.e("ans", Store_ans)
-            } catch (ex: ArithmeticException) {
-                // Display an error message
+            } catch (ex: Exception) {
+
                 txtans?.text = "Error"
                 Store_ans = "ERROR"
             }
