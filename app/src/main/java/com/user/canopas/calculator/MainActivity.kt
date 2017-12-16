@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             txtans?.setText(str.subSequence(0, length - 1))
         }
     }
-
+// reset branch
     private fun getAction(action: String) {
         isLastDot = true
         if (onEqual!!) {
