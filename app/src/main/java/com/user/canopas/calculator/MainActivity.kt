@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         isLastDot = false
     }
-
+//check ...
     private fun ClearButton() {
         txtans?.text = "0"
         lastNum = false
