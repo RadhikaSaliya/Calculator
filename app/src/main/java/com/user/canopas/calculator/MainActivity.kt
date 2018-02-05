@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
-
+//tetsting
     override fun onClick(view: View) {
         val id = view.id
         when (id) {
@@ -150,7 +150,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             txtans?.setText(str.subSequence(0, length - 1))
         }
     }
-
+    //1,2,3.......
+// reset branch
     private fun getAction(action: String) {
         isLastDot = true
         if (onEqual!!) {
