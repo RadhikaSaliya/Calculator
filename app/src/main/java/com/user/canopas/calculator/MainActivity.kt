@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
-//tetsting
+
     override fun onClick(view: View) {
         val id = view.id
         when (id) {
